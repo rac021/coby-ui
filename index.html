@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Coby UI using WebStandards</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" 
+        content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <main>
+
+    <header>
+	
+         <object data="auth/index.html"
+                 type="text/html"
+                 width="100%" 
+                 height="50em" >
+         </object>
+
+    </header>
+
+    <nav>
+     
+      <button type="button" 
+              id="outputLogs"
+              class="gradient-button gradient-button">Output</a> <br />
+
+      <button type="button" 
+              id="listWaitingJobs"
+              class="gradient-button gradient-button">Jobs</a> <br />
+
+       <button type="button" 
+               id="clearOutput"
+               class="gradient-button gradient-button">Clear Output</a> <br />
+   </nav>
+
+    <article>
+       article       
+       <coby-pipeline></coby-pipeline>      
+    </article>
+
+    <footer> Coby Pipeline ( CC ) </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>

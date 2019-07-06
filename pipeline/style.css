@@ -1,0 +1,251 @@
+
+@media screen and (max-width: 55em){
+   textarea {
+        height: 40vh;
+    }  
+}
+
+@media screen and (min-width: 55em){
+    textarea {
+        height: 57vh;
+    }    
+}
+
+
+body, div, h1,h2,h3, h4, h5, h6, p, ul, ol, li, dl,dt , 
+dd, img, form, fieldset, input, textarea, blockquote  { 
+  margin:  0;
+  padding: 0;
+  border:  0;
+}
+
+body {
+  margin: 2em;
+  margin-bottom: 1em;
+  font-family: Helvetica;
+  background: #d4f2ff;
+}
+
+#coby-events {
+  margin-bottom:2em;
+}
+
+#coby-output {
+  margin-top:2em;
+}
+
+#coby {
+  text-align: center;
+}
+
+#coby ul {
+  list-style: none;
+  display: inline-table;
+}
+
+#coby ul li {
+  display: inline;
+}
+
+#coby ul li a {
+  display: block;
+  float: left;
+  height: 50px;
+  background: #3498db;
+  text-align: center;
+  padding: 30px 40px 0 80px;
+  position: relative;
+  margin: 0 10px 0 0;
+  font-size: 20px;
+  text-decoration: none;
+  color: #fff;
+        margin-top:0.4em;
+}
+
+#coby ul li a:after {
+  content: "";
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+  border-left: 40px solid #3498db;
+  position: absolute;
+  right: -40px;
+  top: 0;
+  z-index: 1;
+}
+
+#coby ul li a:before {
+  content: "";
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+  border-left: 40px solid #d4f2ff;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#coby ul li:first-child a {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+
+/*
+#coby ul li:first-child a:before {
+      display: none; 
+}
+*/
+
+#coby ul li:last-child a {
+  padding-right: 80px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 8px;
+}
+
+
+/*
+#coby ul li:last-child a:after {
+  display: none; 
+}
+*/
+
+#coby ul li a:hover {
+  background: #fa5ba5;
+}
+
+#coby ul li a:hover:after {
+  border-left-color: #fa5ba5;
+}
+
+#coby ul li.active a {
+  animation-duration: 1500ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  -webkit-animation: blink 1200ms infinite;
+  /* Safari and Chrome */
+}
+
+@keyframes blink {
+  from {
+    color: green;
+  }
+  to {
+    color: white;
+  }
+}
+
+@-webkit-keyframes blink {
+  from {
+    color: green;
+  }
+  to {
+    color: white;
+  }
+}
+
+/*
+#crumbs ul li a:before {
+  background: lightblue;
+}
+*/
+
+#coby ul li.active a {
+  background: green;
+}
+
+#coby ul li.active a:after {
+  border-left: 40px solid green;
+}
+
+#coby ul li.active~li a {
+  background: lightblue;
+}
+
+#coby ul li.active~li a:after {
+  border-left: 40px solid yellow;
+}
+
+#coby ul li.active~li a:after {
+  border-left: 40px solid lightblue;
+}
+
+textarea {
+  background-color: black;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  border: 1px solid black;
+  color: white;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  /* overflow:hidden; */
+  line-height:1.5;
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+  transition:box-shadow 0.5s ease;
+  max-width:100%;
+  border-radius:5px;
+  font-smoothing:subpixel-antialiased;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285F4; 
+}
+
+textarea::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5; 
+}
+
+
+#output-title {
+  margin-bottom: 0.5em;
+}
+
+
+
+
+/* Style the tab */
+
+.tab {
+  margin-top:1em;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  color:black;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: black; /*#ccc;*/
+  color:white;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 3px 3px;
+  border: 4px solid #ccc;
+  border-top: none;
+}
+
+
