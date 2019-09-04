@@ -1,0 +1,24 @@
+
+.authentication {
+	/* text-align: center; */
+	border: 2px solid #0c0c0d; /*2px solid #77a177;*/
+	margin-right: 1em;
+	margin-left: auto;
+	border-radius: 8.5px;
+	border-spacing: 5px;
+	background: linear-gradient(#455f54,#000);
+}
+
+form {
+	/*transform: translate(0%,50%);*/
+	margin: 1em;
+}
+
+input[type=text],
+input[type=password] {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical;
+	min-width: 3em;
+}

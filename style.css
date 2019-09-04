@@ -1,100 +1,277 @@
-*{
+
+/* coby css - responsive UI */
+
+* {
     --air-background:lightgray;
-    font-family: sans-serif;
+   /* font-family:sans-serif */
 }
 
-@media screen and (min-width: 50em){
-    main{
-        height: 100vh;
-        display:grid;
-        grid-template-rows: 0.5fr 7fr 0.2fr;
-        grid-template-columns: 0.5fr 4fr;
-        grid-template-areas: 
-        "header header"
-        "nav article"
-        "footer footer"        
-    } 
+h1 {
+    animation: text-glow 3s ease-out infinite alternate;
+    font-family: 'Ubuntu', sans-serif;
+    color: #00a4a2;
+    /*font-size: 48px;*/
+    /*font-size: 4.8rem;*/
+    font-weight: bold;
+    /*position: absolute;*/
+    text-shadow: 0 0 10px #000, 0 0 20px #000, 0 0 30px #000, 0 0 40px #000, 0 0 50px #000, 0 0 60px #000, 0 0 70px #000;
+    /*top: 50px;*/  
+    /*margin-top: 1em;*/
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 0;
+    min-width: 7em;
+    /*margin-left: 1.3em;*/
+  }
+   
 
-    nav {  
-      grid-area: nav;
-      background:lightgreen;  
-      height: 100%;
-    }   
-}
+@media screen and (min-width:53em) {
 
-@media screen and (max-width: 50em){
-    main{
-        height: 100vh;
+    main {
+        height:100vh;
         display:grid;
-        grid-template-rows: 0.5fr 7fr 0.2fr;
-        grid-template-columns: 0.5fr 4fr;
-        grid-template-areas: 
-        "header header"
-        "article article"
-        "nav nav"
-        "footer footer"        
+        grid-template-rows:.4fr 7fr .2fr;
+        grid-template-columns:.5fr 4.5fr;
+        background: black;
+        grid-template-areas:"coby-logo header" "nav article" "footer footer"
     }
 
-    nav {    
-      height: 5em;
-      grid-area: nav;
-      margin-top:1em;
-      background:lightgreen;
+    nav {
+        grid-area:nav;
+        background-image: linear-gradient(#43a17a,#000); /*linear-gradient(#b3edd5,#000);*/
+        height:100%;
+        border-style:ridge groove hidden hidden;
+        position:relative
     }
+
+    .action_buttons {
+        margin-top:3em;
+    }
+
+    .clear_buttons {
+        margin-top:3em
+    }
+
+    .logo{
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:1em
+    }
+    article{
+        grid-area:article;
+        grid-gap:1rem;
+        background:var(--air-background,#fff);
+        display:inline-grid;
+        /*background-image:linear-gradient(#171616,#8a8383);*/
+        background-image: linear-gradient(#000000,#131212) ; /*linear-gradient(#000000,#706c6c);*/
+        grid-template-rows:.2fr auto;
+        grid-template-columns:6fr 1fr;
+        grid-template-areas:
+             " coby-pipeline-container coby-info-container " 
+             " coby-tab-container      coby-command-container "
+    }
+
+    coby-info-container {
+        grid-area:coby-info-container;
+        display:grid;
+        margin-top:1.5em;
+        margin-right:1em
+    }
+
+    coby-command-container {
+        grid-area:coby-command-container;
+        margin-top:3.5em
+    }
+
+    .textAreaInfoContainer {
+
+        background: inherit; 
+        resize: none; 
+        color: chartreuse; 
+        box-shadow: 0 0 15px #00fffd;
+        margin-left: -1em;
+        margin-right: 1em;
+    }
+    
 }
 
-body{
-    padding: 0px;
-    margin: 0px;
+@media screen and (max-width:53em) {
+
+    main {
+        height:100vh;
+        display:grid;
+        background: black;
+        grid-template-rows:.1fr .1fr 8fr .1fr;
+        grid-template-areas:
+            "coby-logo coby-logo" 
+            "header    header" 
+            "article   article" 
+            "nav       nav" 
+            "footer    footer"
+    }
+
+    nav {
+        grid-area:nav;
+        margin-top:.2em;
+        background-image: linear-gradient(#43a17a,#000); /*linear-gradient(#b3edd5,#000);*/
+        padding-bottom:.5em
+    }
+
+    .action_buttons {
+        display:inline
+    }
+
+    .clear_buttons {
+        display:inline
+    }
+
+    .logo {
+        display:none 
+    }
+
+    article {
+        grid-area:article;
+        grid-gap:0;
+        background:var(--air-background,#fff);
+        display:inline-grid;
+        /*background-image:linear-gradient(#171616,#8a8383);*/
+        background-image: linear-gradient(#000000,#131212) ; /*linear-gradient(#000000,#706c6c);*/
+        grid-template-rows:.2fr auto;
+        grid-template-columns:6fr 1fr;
+        grid-template-areas:
+            " coby-pipeline-container  coby-pipeline-container " 
+            " coby-info-container      coby-info-container " 
+            " coby-tab-container       coby-tab-container " 
+            " coby-command-container   coby-command-container "
+    }
+
+    coby-info-container {
+        grid-area:coby-info-container;
+        display:grid;
+        width:95%;
+        margin-top:1.5em;
+        min-height:5em;
+        margin-left:1em
+    }
+
+    coby-command-container {
+        grid-area:coby-command-container;
+        margin-top:.5em;
+        margin-bottom:.75em
+    }
+
+    .textAreaInfoContainer {
+
+        background: inherit; 
+        resize: none; 
+        color: chartreuse; 
+        box-shadow: 0 0 15px #00fffd;
+    }
+    
 }
 
-header{
-    grid-area: header;
-    background:lightyellow;
-    font-family: sans-serif;
-    box-shadow: 0 2px 4px rgba(0,0,0,.5);
+header {
+    flex-flow:row wrap;
+    grid-area:header;
+    background-image: linear-gradient(#11340f,#f1e2e2); /*linear-gradient(#346131,#f1e2e2);*/
+    font-family:sans-serif;
+    box-shadow:0 2px 4px rgba(0,0,0,.5);
+    display:flex;
+    flex-direction:row;
+    justify-content:center
 }
 
-
-article{
-    grid-area: article;
-    background:var(--air-background,#fff);
+body {
+    padding:0;
+    margin:0
 }
 
-footer{
-    grid-area: footer;
-    background: lightgray;
-    box-shadow: 1px 2px 4px rgba(0,0,0,.5);
-    text-align: center;
+footer {
+    grid-area:footer;
+    background:linear-gradient(#ffeaea,#4f52a6b5);
+    box-shadow:1px 2px 4px rgba(0,0,0,.5);
+    text-align:center;
+    border-style:inset hidden hidden ;
 }
 
-/* BUTTON */
+coby-tab {
+    display:flex;
+    flex-direction:column;
+    flex-grow:1
+}
 
-.gradient-button {
-    margin: 10px;
-    font-family: "Arial Black", Gadget, sans-serif;
-    font-size: 20px;
+coby-auth {
+    /* flex-grow: 1; */
+    margin-top: auto;
+    margin-bottom: auto;
+    /*background-image: linear-gradient(#506353,#c5c6ce);*/
+    color: #0ff;
     padding: 5px;
-    text-align: center;
-    transition: 0.5s;
-    background-size: 100% auto;
-    color: #FFF;
-    box-shadow: 0 0 20px #eee;
-    border-radius: 10px;
-    width: 8em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 25px;
+    border-radius: 1em;
+    /* align-items: end; */
+    /* margin-right: 1em; */
+    float: right;
+    margin-left: auto;
+    margin-right: 0;
+    padding-bottom: 1px;
+    margin-bottom: 0.5em;
 }
-.gradient-button:hover{
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    margin: 8px 10px 12px;
+
+coby-logo {
+    grid-area:coby-logo;
+    background-image:linear-gradient(#ff7171,#a11a1a);
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    margin-left:2px;
+    margin-right:2px;
+    margin: 2px;
 }
-.gradient-button {background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)}
 
-.gradient-button:hover { background-position: right center; }
+coby-progress-pipeline {
+    margin:0.5em ;
+}
+
+coby-pipeline-container {
+    grid-area:coby-pipeline-container;
+    display:block;
+    justify-content:center;
+    margin-left:1em;
+    margin-right:1em
+}
+
+coby-tab-container {
+    grid-area:coby-tab-container;
+    display:flex;
+    margin-right:1em;
+    flex-grow:1
+}
+
+coby-mode {
+    height: 4em;
+    /*width: 18%;*/
+    /*margin-left: 2em;*/
+    /*margin-right: 1.5em;*/
+    /*text-align: center;*/
+}
 
 
 
+
+/* =========================================
+Animation Keyframes
+========================================= */
+   
+  @keyframes text-glow {
+    0% {
+      color: #00a4a2;
+      text-shadow: 0 0 10px #000, 0 0 20px #000, 0 0 30px #000, 0 0 40px #000, 0 0 50px #000, 0 0 60px #000, 0 0 70px #000;
+    }
+    100% {
+      color: #00fffc;
+      text-shadow: 0 0 20px rgb(11, 11, 11), 0 0 10px rgb(7, 7, 7), 0 2px 0 #0d0d0d;
+    }
+  }
+ 
+ 

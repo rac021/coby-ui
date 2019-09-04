@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html>
 
 <head>
+  <meta charset="UTF-8">
   <title>Coby UI using WebStandards</title>
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" 
@@ -11,43 +13,323 @@
 <body>
 
   <main>
+    
+    <coby-logo></coby-logo>
 
-    <header>
-	
-         <object data="auth/index.html"
-                 type="text/html"
-                 width="100%" 
-                 height="50em" >
-         </object>
+    <header>       
+      
+        <coby-mode>
+            <h1 id="coby-mode" ><i> Pipeline Mode </i></h1>
+        </coby-mode>
 
+         <coby-auth></coby-auth>
     </header>
+
 
     <nav>
      
-      <button type="button" 
-              id="outputLogs"
-              class="gradient-button gradient-button">Output</a> <br />
+      <img class="logo" src="components/base/auth/auth-bar/coby-logo-net.png" width="130em" height="130em" >
 
-      <button type="button" 
-              id="listWaitingJobs"
-              class="gradient-button gradient-button">Jobs</a> <br />
+      <div class="action_buttons " >
+          <coby-button _id="outputLogs" _title="Logs" event="logs" > </coby-button>
+          <coby-button _id="listWaitingJobs" _title="Jobs" event="jobs"> </coby-button> 
+      </div>
 
-       <button type="button" 
-               id="clearOutput"
-               class="gradient-button gradient-button">Clear Output</a> <br />
+      <div class="clear_buttons" >
+          <coby-button _id="clearOutput" _title="Clr Logs" event="clear-logs" > </coby-button>
+      </div>
+
+      <coby-button-on-off></coby-button-on-off>
+
    </nav>
 
-    <article>
-       article       
-       <coby-pipeline></coby-pipeline>      
+    <article id="article" >
+     
+      <coby-pipeline-container class="container" >
+         <coby-progress-pipeline></coby-progress-pipeline>
+         <coby-progressbar></coby-progressbar>
+      </coby-pipeline-container>
+
+      <coby-info-container  class="container" > 
+         <textarea readonly class="textAreaInfoContainer" >Coby output process... </textarea>
+      </coby-info-container>
+
+      <coby-tab-container  class="container" >
+         <coby-tab></coby-tab>         
+      </coby-tab-container> 
+
+      <coby-command-container  class="container" >
+        <coby-button _id="clearOutput1" _title="Clr Logs" event="clear-logs" > </coby-button>
+      </coby-command-container>
+
+       <div class="builder" style="display:none;" >
+	 <coby-pipeline-builder></coby-pipeline-builder> 
+      </div>
+
+
     </article>
+
 
     <footer> Coby Pipeline ( CC ) </footer>
 
   </main>
 
-  <script src="app.js"></script>
+  <!-- Order script in order to prevent multiple same js loading-->
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js" integrity="sha256-eWzD4VoILNfodzTHdCIMKX/k47LcM3hmpTfFhAR7Cj0=" crossorigin="anonymous"></script>
+  
+  <script src="services/globalConf.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+  <script src="components/base/button/coby-button.js"></script>
+  <script src="components/base/button-on-off/button-on-off.js"></script>
+  <script src="components/base/logo/coby-logo.js"></script>
+  <script src="components/base/auth/auth-bar/coby-auth.js"></script>
+  <script src="components/base/progressbar/coby-progressbar.js"></script>
+  <script src="components/base/progress-pipeline/coby-progress-pipeline.js"></script>
+  <script src="components/composite/tab/coby-tab.js"></script>
+  
+  <script src="components/composite/pipeline-builder/pipeline-builder.js"></script>  
+
+
+  <script src="services/service.js"></script>
+  <script src="services/eventListener.js"></script>
+
+  <script>
+
+   /*  REDIPS.drag.init('main_container'); */
+     window.onload = function() {
+   
+     if (supportsES6) {
+        console.info("ES6 Supported") ;
+     } else {
+       alert( "ES6 Not Supported by this Browser ! ") ;
+     }
+  
+     new Service( "https://sse.now.sh" ) ;
+    /*
+     Swal.fire({
+        type: 'success',
+        title: 'Coby Pipeline',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      */
+
+
+      Swal.fire({
+        title: 'Coby Pipeline',
+        html: ' <html> <div id="auth-container" style=" display:none; background:black; background: black; margin-left: 1em; margin-right: 1em; height: 0px; -webkit-transition: all 0.3s ; "> ' +
+              ' <coby-auth-page></coby-auth-page> </div> </html> ', 
+        width: 895,
+        onBeforeOpen: () => {    
+
+          
+         
+        },
+        onOpen: () => {
+
+                                  
+                                const buildAuthenticationPage = async _ => { 
+
+                                    var content = document.getElementById("auth-container");
+                                  
+                                    content.style.display="none";
+                                    content.style.height = "0px" ;
+
+                                    let script= document.createElement('script') ;
+                                    script.type= 'text/javascript';
+                                    script.src= "components/base/auth/auth-page/coby-auth-page.js" ;
+                                    document.body.appendChild(script) ;
+                                                                        
+                                    await new Promise(r => setTimeout(r, 100));
+
+                                   content.style.display="";
+
+                                    setTimeout(function()   {
+                                       content.style.display="";
+                                       content.style.height = "540px" ;
+                                    }, 100 );
+                                    
+                                };
+
+                                buildAuthenticationPage() ;
+
+
+/*
+
+
+                                const checkElement = async selector => {
+//alert(selector);
+while ( document.querySelector("object") === null ||  document.querySelector("object").getElementsByTagName(selector) === null ) {
+  await new Promise(r => setTimeout(r, 2500));
+}
+//alert(document.querySelector("object").getElementsByTagName(selector));
+return document.querySelector("object").getElementsByTagName(selector); 
+
+};
+
+
+*/
+
+
+            
+
+        } ,
+        padding: '1em',
+        confirmButtonText: 'Later',
+        backdrop: `
+          rgba(0,0,123,0.4)          
+          center left
+          no-repeat
+        `
+      }) ;
+
+
+/*
+      Swal.fire({
+        title: 'Coby Pipeline \n Don\'t forget to connect.',
+        html: '<object name="auth-page" type="text/html" data="components/base/auth-page/coby-auth-page.html"></object>',
+        width: 800,
+        padding: '1em',
+        backdrop: `
+          rgba(0,0,123,0.4)          
+          center left
+          no-repeat
+        `
+      }) ;
+*/
+
+/*
+      Swal.fire({
+        title: 'Login to Coby Now ? ',
+        width: 600,
+        html: '<object name="auth-page" type="text/html" data="components/base/auth-page/coby-auth-page.html"></object>',
+        type: 'question',       
+        confirmButtonText:  'yes',
+        cancelButtonText:  'no',
+        showCancelButton: true,
+        showCloseButton: true
+      })
+*/
+
+    } 
+
+     window.onerror = function (msg, url, lineNo, columnNo, error) {
+	  
+                  var string = msg.toLowerCase();
+                  var substring = "script error";
+                
+                  var message = [
+                      'Message: ' + msg,
+                      'URL: ' + url,
+                      'Line: ' + lineNo,
+                      'Column: ' + columnNo,
+                      'Error object: ' + JSON.stringify(error)
+                  ].join(' - ');
+
+                            // console.error(message);
+                  return false ;
+     }
+
+
+
+    var supportsES6 = function() {
+      try {
+        new Function("(a = 0) => a");
+        return true;
+      }
+      catch (err) {
+        return false;
+      }
+    }() ;
+
+ 
+/*
+while(!document.getElementById("login-page")) {
+  await new Promise(r => setTimeout(r, 800));
+}
+
+alert(document.getElementById("login-page"));
+
+*/
+
+
+const checkElement = async selector => {
+//alert(selector);
+while ( document.querySelector("object") === null ||  document.querySelector("object").getElementsByTagName(selector) === null ) {
+  await new Promise(r => setTimeout(r, 2500));
+}
+//alert(document.querySelector("object").getElementsByTagName(selector));
+return document.querySelector("object").getElementsByTagName(selector); 
+
+};
+
+
+
+
+
+
+ checkElement('auth-button-id-page') //use whichever selector you want
+.then((element) => {
+     //alert(" BUTTON --> " + element + " --> " + element.length );
+     
+     alert(" BODY -> " + document.querySelector("embed").getElementsByTagName('auth-button-id-page').length);
+
+     element.onclick = _ => { console.log("CLICKED !!!!!!!!!!!!!!!!!") ; } ;
+     //Do whatever you want now the element is there
+});
+
+
+
+/*
+
+ checkElement('login-page') //use whichever selector you want
+.then((element) => {
+     alert(element);
+     //Do whatever you want now the element is there
+});
+
+ async function checkElement(selector) {
+    const querySelector = document.getElementById("login-page");
+    while (querySelector === null) {
+        await rafAsync() ;
+    }
+    return querySelector;
+}  
+
+function rafAsync() {
+    return new Promise(resolve => {
+        requestAnimationFrame(resolve); //faster than set time out
+    });
+}
+*/
+
+
+
+
+/*
+window.onload = function () {
+
+var tag = document.createElement("script");
+tag.src = "components/base/pipeline-builder/redips-drag-min.js";
+document.getElementsByTagName("head")[0].appendChild(tag);
+
+var tog = document.createElement("script");
+tog.src = "components/base/pipeline-builder/script.js";
+document.getElementsByTagName("head")[0].appendChild(tog);
+
+
+alert("load");
+   // rd = REDIPS.drag; // reference to the REDIPS.drag lib
+    // initialization
+   // rd.init('main_container');
+};
+*/
+ 
+  </script>
+  
 </body>
 
 </html>

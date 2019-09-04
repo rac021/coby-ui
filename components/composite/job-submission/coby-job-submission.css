@@ -1,0 +1,15 @@
+
+ .submitContainerId {
+       display: flex; 
+       flex-grow: 1;
+       /* width:90%; */
+       /* height:7vh; */
+       /* margin-top:1em; */
+       /* padding-left:2em; */
+ }
+
+ coby-textarea {
+       display: flex; 
+       flex-grow: 1;
+       /*margin: 0.2em;*/
+ }

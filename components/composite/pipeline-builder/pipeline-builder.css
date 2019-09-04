@@ -1,0 +1,297 @@
+
+body {
+	font-family: arial;
+	margin: 0px;
+	/* for IE6 / IE7 */
+}
+
+@media screen and (min-width:70em) {
+	main-container-builder {
+		/*background: cyan;*/
+		margin: auto;
+		display: grid;
+		height: 100%;
+		margin-top: 0.8em;
+		grid-template-rows: 4fr auto;
+		grid-template-columns: 2.5fr 3.5fr 2.1fr;
+		grid-template-areas: " pipeline-builder-left    pipeline-builder-right    pipeline-builder-message-info" 
+                                     " pipeline-builder-message pipeline-builder-message  pipeline-builder-message "
+	}
+	pipeline-builder-message-info {
+		grid-area: pipeline-builder-message-info;
+		display: block;
+		justify-content: center;
+		margin-left: 1em;
+		margin-right: 1em
+	}
+	pipeline-builder-arrow {
+		display: block;
+	}
+}
+
+@media screen and (max-width:70em) {
+	main-container-builder {
+		/*background: green;*/
+		margin: auto;
+		display: grid;
+		flex-direction: column;
+		height: 100%;
+		/*grid-template-rows: 1.5fr auto 1fr auto;*/
+		grid-template-columns: 6fr;
+		grid-template-areas: " pipeline-builder-left " " pipeline-builder-right" 
+                                     " pipeline-builder-message-info" " pipeline-builder-message "
+	}
+	pipeline-builder-message-info {
+		grid-area: pipeline-builder-message-info;
+		display: block;
+		justify-content: center;
+		margin-left: 0.4em;
+	}
+	pipeline-builder-arrow {
+		display: none;
+	}
+}
+
+pipeline-builder-right {
+	grid-area: pipeline-builder-right;
+	display: flex;
+    flex-direction: column;
+	justify-content: center;
+	margin-left: 1em;
+	margin-right: 1em
+}
+
+pipeline-builder-left {
+	grid-area: pipeline-builder-left;
+	display: block;
+	justify-content: center;
+	margin-left: 1em;
+	margin-right: 1em
+}
+
+pipeline-builder-message {
+	grid-area: pipeline-builder-message;
+	display: block;
+	justify-content: center;
+	margin-left: 0.5em;
+	margin-right: 0.5em
+}
+
+
+/* drag objects (DIV elements inside table cells) */
+
+.redips-drag {
+	cursor: move;
+	margin: auto;
+	z-index: 10;
+	background-color: white;
+	text-align: center;
+	font-size: 10pt;
+	/* needed for cloned object */
+	opacity: 0.99;
+	filter: alpha(opacity=70);
+	/* without width, IE6/7 will not apply filter/opacity to the element ?! */
+	/* IE needs element layout */
+	width: 18em;
+	height: 35px;
+	line-height: 35px;
+	/* round corners */
+	border-radius: 1em;
+	/* Opera, Chrome */
+}
+
+
+/* drag area */
+
+#redips-drag {
+	/*display: inline-flex;*/
+	/*width: 420px;*/
+	flex-grow: 1;
+	height: 100%;
+}
+
+
+/* table cells */
+
+div#redips-drag td {
+	height: 50px;
+	text-align: center;
+	font-size: 10pt;
+	padding: 2px;
+	/* display: inline-flex;*/
+}
+
+
+/* styles for left table */
+
+#table1,
+#table2 {
+	/*background-color: #eee; */
+	background: linear-gradient(#615e5e, #000000); /*linear-gradient(#9f8b8b, #459740);*/
+	border-collapse: collapse;
+	display: flex;
+	margin-top: 0.5em;
+	border-radius: 0.7em;
+	box-shadow: 0 0 1.5em #00fffd;
+}
+
+
+/* border for table1 */
+
+#table1 td {
+	border: 1px solid #DDC5B5;
+	flex-grow: 1;
+	display: flex;
+}
+
+#table1 {
+	display: flex;
+	flex-grow: 1;
+}
+
+
+/* green objects */
+
+.green {
+	border: 2px solid #499B33;
+}
+
+
+/* orange objects */
+
+.orange {
+	border: 2px solid #BF6A30;
+}
+
+
+/* green objects */
+
+.red {
+	border: 2px solid red;
+}
+
+
+/* message line */
+
+#message {
+	color: cyan;;
+	/*background: linear-gradient(#c2293e00,#46467ab3);*/
+	/*background: linear-gradient(#c2293e00, #050572ba);*/
+	margin-top: 10px;
+	/*display: inline-flex;*/
+	margin-left: 0.5em;
+	border-radius: 0.5em;
+	border-color: #1bf73a;
+	height: 2.5em;
+	text-align: left;
+	padding: 0.2em;
+	padding-left: 0.8em;
+	margin-bottom: 1em;
+	/*border: inset;*/
+	/*border-width: 0.5px;*/
+	font-size: 1.5em;
+}
+
+
+/* cells from the right table (forbidden cells) */
+
+.redips-mark {
+	color: #444;
+	/*background-color: #e0e0e0; */
+}
+
+tbody {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	margin: 0.5em;
+	width: 16em;
+	text-align: -webkit-center;
+}
+
+#table1 .left-box ,
+#table2 .left-box  {
+	margin: 5px;
+	color: cyan ;
+	background: #000;
+}
+
+.redips-drag:hover {
+	width: 19em;
+	height: 36px;
+	line-height: 35px;
+}
+
+label {
+	float: none;
+	/* if you had floats before? otherwise inline-block will behave differently */
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.input-info {
+	width: 51%;
+	margin-left: 5px;
+	background: aquamarine;
+}
+
+.DSL {
+	border-radius: 0.9em;
+	white-space: pre-wrap;
+	background: #78aee354;
+	padding-left: 1em;
+	margin-top: 0.5em;
+	min-width: 90%;
+	min-height: 10em;
+	border: double;
+	margin-bottom: 0.5em;
+}
+
+.message-info {
+	background: linear-gradient(#656568, #000) ; /* linear-gradient(#73769f, #000);*/
+	color: yellow;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 0.80em;
+	box-shadow: 0 0 1.5em #263be7;
+	padding-bottom: 0em;
+	/*flex-grow:2 ;*/
+}
+
+.message-dsl {
+	/* flex-grow: 1; */
+	float: right;
+	/* margin: auto; */
+	/* display: inline-block; */
+	/* position: relative; */
+	margin-right: 1em;
+	/* text-align: end; */
+	/* align-content: normal; */
+}
+
+div#right {
+	display: flex;
+	flex-grow: 1;
+        -webkit-transition: opacity 1000ms linear;
+        transition: opacity 1000ms linear;
+}
+
+.commit_save_buttons {
+	margin-top: 1.5em;
+}
+
+.img-arrow {
+	width: 50%;
+	height: 30%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+	margin-bottom: 1em;
+	opacity: 0.2;
+}
+
+#template_list {
+	width: 80%;
+	background: linear-gradient(#346131,#f1e2e2);
+}

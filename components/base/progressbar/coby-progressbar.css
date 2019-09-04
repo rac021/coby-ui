@@ -1,0 +1,108 @@
+
+#prbar {
+	margin: 0px;
+	width: 99%;
+	background-color: #ff943b;
+	/* #dddddd; */
+	overflow: hidden;
+	/* Rounded Border */
+	border: 1px solid #bbbbbb;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	/* Adding some shadow to the progress bar */
+	-webkit-box-shadow: 0px 2px 4px #555555;
+	-moz-box-shadow: 0px 2px 4px #555555;
+	box-shadow: 0px 2px 4px #555555;
+}
+
+
+/* No rounded corners for Opera, because the overflow:hidden dont work with rounded corners */
+
+doesnotexist:-o-prefocus,
+#prbar {
+	border-radius: 0px;
+}
+
+#prpos {
+	width: 0%;
+	height: 20px;
+	background-color: #3399ff;
+	border-right: 1px solid #bbbbbb;
+	/* CSS3 Progress Bar Transitions */
+	transition: width 2s ease;
+	-webkit-transition: width 0s ease;
+	-o-transition: width 0s ease;
+	-moz-transition: width 0s ease;
+	-ms-transition: width 0s ease;
+	/* CSS3 Stripes */
+	background-image: linear-gradient(135deg, #3399ff 25%, #0f0101 25%, #0f0101 50%, #3399ff 50%, #3399ff 75%, #0f0101 75%, #0f0101 100%);
+	background-image: -moz-linear-gradient(135deg, #3399ff 25%, #0f0101 25%, #0f0101 50%, #3399ff 50%, #3399ff 75%, #0f0101 75%, #0f0101 100%);
+	background-image: -ms-linear-gradient(135deg, #3399ff 25%, #0f0101 25%, #0f0101 50%, #3399ff 50%, #3399ff 75%, #0f0101 75%, #0f0101 100%);
+	background-image: -o-linear-gradient(135deg, #3399ff 25%, #0f0101 25%, #0f0101 50%, #3399ff 50%, #3399ff 75%, #0f0101 75%, #0f0101 100%);
+	background-image: -webkit-gradient(linear, 100% 100%, 0 0, color-stop(.25, #0f0101), color-stop(.25, #3399ff), color-stop(.5, #3399ff), 
+                           color-stop(.5, #0f0101), color-stop(.75, #0f0101), color-stop(.75, #3399ff), color-stop(1, #3399ff));
+	background-image: -webkit-linear-gradient(135deg, #3399ff 25%, #0f0101 25%, #0f0101 50%, #3399ff 50%, #3399ff 75%, #0f0101 75%, #0f0101 100%);
+	background-size: 40px 40px;
+	/* Background stripes animation */
+	animation: bganim 3s linear 2s infinite;
+	-moz-animation: bganim 3s linear 2s infinite;
+	-webkit-animation: bganim 3s linear 2s infinite;
+	-o-animation: bganim 3s linear 2s infinite;
+	-ms-animation: bganim 3s linear 2s infinite;
+}
+
+#cval {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+}
+
+@keyframes bganim {
+	from {
+		background-position: 0px;
+	}
+	to {
+		background-position: 40px;
+	}
+}
+
+@-moz-keyframes bganim {
+	from {
+		background-position: 0px;
+	}
+	to {
+		background-position: 40px;
+	}
+}
+
+@-webkit-keyframes bganim {
+	from {
+		background-position: 0px;
+	}
+	to {
+		background-position: 40px;
+	}
+}
+
+@-o-keyframes bganim {
+	from {
+		background-position: 0px;
+	}
+	to {
+		background-position: 40px;
+	}
+}
+
+@-ms-keyframes bganim {
+	from {
+		background-position: 0px;
+	}
+	to {
+		background-position: 40px;
+	}
+}
+
