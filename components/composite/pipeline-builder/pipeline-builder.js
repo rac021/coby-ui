@@ -107,8 +107,7 @@
                                                                  event="clear-builder" 
                                                                  _style="background:linear-gradient(to right, #5c349b 0%, #366db8 51%, #08e115cf 100%);">  >
                             </coby-button>
-                            
-                            <upload-psl></upload-psl>
+                           
                              
 						</div>
 
@@ -127,6 +126,11 @@
                                                                  event="commit-builder" 
                                                                  _style="background: linear-gradient(to right, #00d2ff 0%, #0f0222 51%, #00d2ff 100%);"  > 
                                                     </coby-button>				                    
+						</div>
+						
+						
+						<div style="margin-top:2em;">
+						  <upload-psl></upload-psl>
 						</div>
 		 
 						<br/><br/>				
@@ -147,7 +151,6 @@
                  </main-container-builder>
          
            </div> <!-- drag container -->
-
 
      ` ;
 
