@@ -16,12 +16,12 @@
 
      this.innerHTML =  `
             
-                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
 		 <link href="components/composite/pipeline-builder/pipeline-builder.css" rel="stylesheet" />
 			
-                 <div id="redips-drag" name="redips-drag" >
+         <div id="redips-drag" name="redips-drag" >
 
 		 <!-- tables inside this DIV could have draggable content -->
 
@@ -89,21 +89,27 @@
                                </pipeline-builder-right>
 
 				<pipeline-builder-message-info>
+				
 					<div id="message-info" class="message-info" >
 								            
-				                <div class="serialize_button" >
+				            <div class="serialize_button" >
+				            
 						    <coby-button name="serialize_button" 
                                                                  _id="serialize_button_ID" 
                                                                  _title="Serialize"
                                                                  event="serialize-builder" 
                                                                  _style="background: linear-gradient(to right, #5c349b 0%, #366db8 51%, #08e115cf 100%);" > 
-                                                    </coby-button>
-                                                    <coby-button name="clear_button" 
+                            </coby-button>
+                            
+                            <coby-button name="clear_button" 
                                                                  _id="clear_button_ID" 
                                                                  _title="Clear" 
                                                                  event="clear-builder" 
                                                                  _style="background:linear-gradient(to right, #5c349b 0%, #366db8 51%, #08e115cf 100%);">  >
-                                                    </coby-button>
+                            </coby-button>
+                            
+                            <upload-psl></upload-psl>
+                             
 						</div>
 
 				               <div id="DSL" class="DSL">\nDSL..\n\n</div>
@@ -125,6 +131,7 @@
 		 
 						<br/><br/>				
 					</div>
+					
 				</pipeline-builder-message-info>
 
 
