@@ -80,6 +80,11 @@
   
   <script src="services/globalConf.js"></script>
 
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+  
+  
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
   <script src="components/base/button/coby-button.js"></script>
@@ -94,7 +99,9 @@
 
   <script src="components/base/upload/upload.js"></script>
   
-  <script src="services/service.js"></script>
+  <!-- <script src="services/service.js"></script> -->
+   <script src="services/amqp-service.js"></script> 
+  
   <script src="services/eventListener.js"></script>
 
   <script>
@@ -108,7 +115,9 @@
        alert( "ES6 Not Supported by this Browser ! ") ;
      }
   
-     new Service( "https://sse.now.sh" ) ;
+     // new Service( "https://sse.now.sh" ) ;
+     new AmqpService( "ws://127.0.0.1:15674/ws" ) ; 
+     
     /*
      Swal.fire({
         type: 'success',

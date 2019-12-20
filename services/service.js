@@ -3,15 +3,15 @@
 
    constructor( url ) { 
 
-        this.url = url ; // "https://sse.now.sh" ;
-	this.connectedCallback() ;       
+    this.url = url ; // "https://sse.now.sh" ;
+    this.connectedCallback() ;       
    }
 
    connectedCallback() {
 
 	this.events = new EventSource(this.url) ;
 
-        this.events.onopen  = (e) => console.log(e) ;
+    this.events.onopen  = (e) => console.log(e) ;
 
 	this.events.onmessage = (e) => {
 
@@ -20,8 +20,8 @@
                                          {  bubbles: true    , 
                                             composed: true   ,
                                             detail: {
-						message: e.data						
-					    } 
+                                              message: e.data
+                                            } 
                                          } 
                                ) ) ;
 
@@ -30,8 +30,8 @@
                                          {  bubbles: true    , 
                                             composed: true   ,
                                             detail: {
-						message: " JOBS : " + e.data						
-					    } 
+                                              message: " JOBS : " + e.data
+                                            } 
                                          } 
                                ) ) ;
 
