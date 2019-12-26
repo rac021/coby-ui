@@ -7,7 +7,9 @@
 
       this.loginID = "ligin" ;
       this.passwordID = "password" ;
-      this.authButtonId = "AuthID" ;
+      this.ConnectButtonId = "connectButtonID" ;
+      
+      this.disonnectButtonId = "disconnectButtonID" ;
 
  
    }
@@ -20,38 +22,54 @@
 
 	  <table id="authentication-bar" name="authentication-bar" class="authentication">
 
-		    <tr id="connection-bar" style="display:none" >    
+		    <tr id="connection-bar" style="display:block;" >    
 		      <th>Login : </th>
 		      <th><input name="login" id="${this.loginID }" type="text" maxlength="20" /></th> 
 		      <th>Password :</th>
 		      <th><input name="password" id="${this.passwordID}" type="password" maxlength="20" /></th> 
-		      <th><input type="submit" value="Connect" id="${this.authButtonId}" style="margin-right: 0.5em; margin-left: 1em;" /></th> 
+		      <th><input type="submit" value="Connect" id="${this.ConnectButtonId}" style="margin-right: 0.5em; margin-left: 1em;" /></th> 
 			</tr>			
 
-			<div id="connected-bar" style="display:OK" >			   
+			<tbody id="connected-bar" style="display:none" >			   
 			    <th>Connected as [ Rac021 ] </th>
-				<th><input type="submit" value="Disconnect" id="${this.authButtonId}" style="margin-right: 0.5em; margin-left: 1em;" /></th> 
-			</div>			
+				<th><input type="submit" value="Disconnect" id="${this.disonnectButtonId}" style="margin-right: 0.5em; margin-left: 1em;" /></th> 
+			</tbody>			
 
 	  </table>
 
      ` ;
 
-     this.shadowRoot.getElementById (this.authButtonId).onclick = _ =>  this.auth() ;
+     this.shadowRoot.getElementById (this.ConnectButtonId).onclick = _ =>  this.connect() ;
+     this.shadowRoot.getElementById (this.disonnectButtonId).onclick = _ =>  this.disconnect() ;
         
 
    }
 
-   auth() {
-   
-        var login    = this.shadowRoot.getElementById(this.loginID).value ;
+   connect() {
+       
+       var login    = this.shadowRoot.getElementById(this.loginID).value ;
 
-	   var password = this.shadowRoot.getElementById(this.passwordID ).value ;
-
-           alert(login + " -- " + password ) ; 
-   
-	   var xhr = new XMLHttpRequest();
-
+	   var password = this.shadowRoot.getElementById(this.passwordID ).value ;    
+       
+       // window.dispatchEvent( new Event( "clear-logs" , 
+       //                                  {  bubbles: true , 
+         //                                   composed: true } ) ) ;
+                                                   
+       
+       window.dispatchEvent( new CustomEvent ( "authentication" , 
+                                                                {  bubbles: true    , 
+                                                                   composed: true   ,
+                                                                   detail: {
+                                                                        login: login,
+                                                                        password: password
+                                                                   } 
+                                                               } 
+                           ) ) ;
+                        
+                        
+       /*
+       var xhr = new XMLHttpRequest();
+       
 	   xhr.open('POST', 'www.google.com');
 	   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	   xhr.onload = function() {
@@ -63,12 +81,29 @@
 		   }
 	   };
 
-	   xhr.send(encodeURI('name=' + "HELOOO"));
-
- 
+	   xhr.send(encodeURI('name=' + "HELOOO")); 
+       */
+       
   }
 
+disconnect() {
+   console.log("Disconnect....")  ;
+   document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[1].getElementsByTagName("th")[0].innerHTML  =  "Connected as [ ] "  ;
+   document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[0].style.display = "block" ;
+   document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("connected-bar").style.display = "none" ;
+   
+     window.dispatchEvent( new CustomEvent ( 'onDisconnect' , 
+                                            {  bubbles: true    , 
+                                                composed: true   ,
+                                                detail: {
+                                                message: 'onDisconnect'
+                                                } 
+                                            } 
+                        ) ) ;
+    
+  }
 
+  
  }
 
 

@@ -1,6 +1,7 @@
  
-  class EventListener {
+  class EventListenerService {
 
+      
       constructor() {
           this.connectedCallback()   ;
 
@@ -8,13 +9,134 @@
 
       connectedCallback() {
 
-
         window.addEventListener( "authentication", function(event) {
         
           this.console.log ( " Authentication : " + event.detail.login  + " -- " +  event.detail.password ) ; 
 
-          if(  event.detail.login === "rac021" ) {
+          var vHost = "/" ;
+          var queue = "/exchange/coby-log-user-exchange" ;
+          var socket = "ws://127.0.0.1:15674/ws"         ;
+          
+          if( event.detail.login == 'admin' ) {
+              queue = "/queue/coby-log-root-queue"
+          }
+          
+          this.login = event.detail.login ;
+          this.password =  event.detail.password ;
+          
+          this.amqp = new AmqpService()  ;
+          
+          this.amqp.connect( socket, vHost, queue, login , password ) ;
+          
+          var connexion = "" ;
+          
+          var tryConn = () => {
+              
+                return new Promise((resolve, reject) =>   {
 
+                    const intervalId = setInterval(() =>  {
+
+                     if( this.amqp.getConnectionState() === "OK" ) {
+                         clearInterval(intervalId) ;
+                          resolve("OK");
+                     }
+                     
+                     else {
+                        clearInterval(intervalId) ;
+                          resolve("KO");
+                    }
+                    }, 50 )
+                })
+          } ;
+          
+          
+          tryConn().then( connState =>      {
+             
+                    if( connState == "OK" ) {                       
+                                     
+                            Swal.fire ( {
+                            position: 'center',
+                            type: 'success',
+                            title: 'Signed in Successfully',
+                            showConfirmButton: false,
+                            timer: 2500
+                            }) ;
+                                                     
+                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[1].getElementsByTagName("th")[0].innerHTML  =  "Connected as [ " + event.detail.login  + " ]"  ;
+                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[0].style.display = "none" ;
+                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("connected-bar").style.display = "block" ;
+                                                        
+                            // Because Connected 
+                            window.addEventListener( "onDisconnect" , event =>  {
+                                
+                                this.amqp = null ;
+                                   
+                                Swal.fire ( {
+                                    position: 'center',
+                                    type: 'info',
+                                    title: 'Signed out Successfully',
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }) ;                            
+                                
+                            });
+                    }                    
+              
+              } ) ;
+          
+          /*
+
+          var tryConn = setInterval( () => {
+                            //alert("CONNNNNNNN");
+                           //alert("amqp.getConnectionState()  ==> " + amqp.getConnectionState()  );
+                             if( amqp.getConnectionState() === "OK" || amqp.getConnectionState() === "KO" ) {
+                                connexion = amqp.getConnectionState() ;
+                                 //alert("connexion  ==> " + connexion );
+                               clearInterval(tryConn) ;
+                             }
+                         } ,
+                         1000 ) ;
+          */
+                         
+         // tryConn ;
+                         
+          /*
+            alert(" ===> [" + connexion + "]" );
+            if( connexion  === "OK" ) {
+                alert("YEAH");
+                 Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'Connected',
+                  showConfirmButton: false,
+                  timer: 2500
+                }) ;
+                
+                //  document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").style.display = "none";
+
+                document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").innerHTML +=  event.detail.login + " - Connected" ;
+              
+            }
+        */
+           
+          //                .then( am => am.connect() )
+            //             .then( am => return am.getConnectionState()) ) ; 
+                          
+                          
+                        //  alert(amqp.getConnectionState()) ;
+          
+          //AmqpService.service( socket, vHost, queue, event.detail.login , event.detail.password )
+            //             .then( am => am.connect())
+              //           .then( am => getConnectionState()) ; 
+                             
+           
+         
+           
+          /*
+          if(  amqp.getConnectionState() === "CONNECTED" ) {
+
+               alert( " ===+++ " + amqp.CONNECTION_STATE ) ;
+               
                 Swal.fire({
                   position: 'top-end',
                   type: 'success',
@@ -23,16 +145,13 @@
                   timer: 2500
                 }) ;
 
-
-                
+               
              // document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").style.display = "none";
 
               document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").innerHTML +=  event.detail.login + " - Connected" ;
 
-
-
           } 
-          
+          */
         }) ; 
 
 
@@ -91,12 +210,20 @@
                    document.getElementById("coby-mode").innerHTML = " Pipeline Mode";
                 }
 
-  	   })  ;         
+  	   })  ;   
+             
 
       }
+      
+      
+      removeInstance( instance)  {
+         alert("remove instance");
+         instance = null ;
+     }     
+     
   }
- 
 
+   
   function load_js(script)  {
       var head= document.getElementsByTagName('head')[0];
       var script= document.createElement('script');
@@ -174,7 +301,11 @@ function fadeOut(el, time) {
   tick();
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
- new EventListener() ;
+
+ new EventListenerService() ;
 
 

@@ -18,7 +18,9 @@
             
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
+        <!-- <script src="components/composite/pipeline-builder/redips/redips-drag-min.js"></script> -->
+        <!-- <script src="components/composite/pipeline-builder/redips-script.js"></script> -->
+        
 		 <link href="components/composite/pipeline-builder/pipeline-builder.css" rel="stylesheet" />
 			
          <div id="redips-drag" name="redips-drag" >
@@ -154,10 +156,12 @@
 
      ` ;
 
-     _attachScript('components/base/button/coby-button.js') ;  
-
-     _attachScript('components/composite/pipeline-builder/redips/redips-drag-min.js') ;  
-     _attachScript('components/composite/pipeline-builder/redips-script.js') ; 
+      _attachScript('components/composite/pipeline-builder/redips/redips-drag-min.js') ;  
+      _attachScript('components/base/button/coby-button.js') ;
+    
+      setTimeout(function() { _attachScript('components/composite/pipeline-builder/redips-script.js') ; }, 5 ) ; 
+      
+     
 
      document.querySelector(".serialize_button coby-button")
              .onclick = _ => {
@@ -180,7 +184,7 @@
 
 
  function _attachScript(url) {
-
+ 
   var alreadyLoaded = false ;
   var scripts = document.getElementsByTagName('script');
   var stringScripts = "" ;

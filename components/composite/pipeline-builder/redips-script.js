@@ -4,11 +4,13 @@
 /* enable strict mode */
 "use strict"; 
 
+var rd = REDIPS.drag;	// reference to the REDIPS.drag lib
+
 var redipsInit,			// define redipsInit variable
 	//toggleAnimation,	enable / disable animation
 	startPositions,		// remember initial positions of DIV elements
-	pos = {},			// initial positions of DIV elements
-	rd = REDIPS.drag;	// reference to the REDIPS.drag lib
+	pos = {} ;			// initial positions of DIV elements
+	
 
 
 // redips initialization

@@ -80,7 +80,7 @@ Log in form
   box-shadow: 0 0 15px #00fffd;
   border-radius: 5px;
   display: inline-block;
-  height: 220px;
+  height: 225px;
   margin: 195px auto 0;
   position: relative;
   z-index: 4;
@@ -348,3 +348,27 @@ Animation Keyframes
   50% { transform: translate(-5px, 0); }
   100% { transform: translate(5px, 0); }
 }
+
+
+/*
+.popup {
+    display: inline-block;
+}
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #b1b1b1;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 20px;
+    position:relative;
+    top:50px;
+    right:150px;
+}
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+*/

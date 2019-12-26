@@ -44,7 +44,7 @@
 
      this.shadowRoot
          .getElementById( this._id )
-         .onclick = _ => {
+         .onclick = _ => {             
                window.dispatchEvent( new Event( this.event , 
                                                 {  bubbles: true , 
                                                    composed: true } ) ) ;

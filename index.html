@@ -59,7 +59,8 @@
       </coby-tab-container> 
 
       <coby-command-container  class="container" >
-        <coby-button _id="clearOutput1" _title="Clr Logs" event="clear-logs" > </coby-button>
+         <coby-button _id="clearOutput1" _title="Clr Logs" event="clear-logs" > </coby-button>
+         <coby-button _id="clearOutput1" _title="Clr Logs Perm" event="clear-logs-permanently" > </coby-button>
       </coby-command-container>
 
        <div class="builder" style="display:none;" >
@@ -81,7 +82,7 @@
   <script src="services/globalConf.js"></script>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
   
   
@@ -116,7 +117,7 @@
      }
   
      // new Service( "https://sse.now.sh" ) ;
-     new AmqpService( "ws://127.0.0.1:15674/ws" ) ; 
+     // new AmqpService( "ws://127.0.0.1:15674/ws" ) ; 
      
     /*
      Swal.fire({
@@ -139,9 +140,8 @@
          
         },
         onOpen: () => {
-
-                                  
-                                const buildAuthenticationPage = async _ => { 
+   
+                               const buildAuthenticationPage = async _ => { 
 
                                     var content = document.getElementById("auth-container");
                                   
@@ -166,7 +166,6 @@
 
                                 buildAuthenticationPage() ;
 
-
 /*
 
 
@@ -181,10 +180,7 @@ return document.querySelector("object").getElementsByTagName(selector);
 };
 
 
-*/
-
-
-            
+*/            
 
         } ,
         padding: '1em',
@@ -194,7 +190,12 @@ return document.querySelector("object").getElementsByTagName(selector);
           center left
           no-repeat
         `
-      }) ;
+      })
+      .then( (result) => {    
+      console.log( " Close Auth Page : result.value => " + result.value );
+    }
+      )
+  ;
 
 
 /*

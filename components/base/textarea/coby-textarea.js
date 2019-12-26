@@ -54,12 +54,25 @@
      const textArea = this.shadowRoot.querySelector( 'textarea' ) ;
 
      window.addEventListener( this.eventType ,function(event) {
-        textArea.value += event.detail.message + "\n" ; 
+        textArea.value += event.detail.message + "\n" ;
+       // textArea.scrollTop = textArea.scrollHeight    ;
      }) ;
-     
+   
      window.addEventListener( onClearLogs ,function(event) {
         textArea.value = "" ;
      }) ;
+     
+     
+     var scrol = setInterval(() => {
+        textArea.scrollTop = textArea.scrollHeight;
+     }, 500 );
+     
+         
+     textArea.onscroll = () => {
+          clearInterval(scrol);    
+     } ;
+      
+      
    }
 
  }
