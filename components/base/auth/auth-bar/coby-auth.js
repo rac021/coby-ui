@@ -24,9 +24,9 @@
 
 		    <tr id="connection-bar" style="display:block;" >    
 		      <th>Login : </th>
-		      <th><input name="login" id="${this.loginID }" type="text" maxlength="20" /></th> 
+		      <th><input name="login" id="${this.loginID }" type="text" maxlength="20" value="admin" /></th> 
 		      <th>Password :</th>
-		      <th><input name="password" id="${this.passwordID}" type="password" maxlength="20" /></th> 
+		      <th><input name="password" id="${this.passwordID}" type="password" maxlength="20" value="admin" /></th> 
 		      <th><input type="submit" value="Connect" id="${this.ConnectButtonId}" style="margin-right: 0.5em; margin-left: 1em;" /></th> 
 			</tr>			
 
@@ -40,9 +40,8 @@
      ` ;
 
      this.shadowRoot.getElementById (this.ConnectButtonId).onclick = _ =>  this.connect() ;
-     this.shadowRoot.getElementById (this.disonnectButtonId).onclick = _ =>  this.disconnect() ;
-        
-
+     this.shadowRoot.getElementById (this.disonnectButtonId).onclick = _ =>  this.disconnect() ;        
+ 
    }
 
    connect() {
@@ -87,20 +86,21 @@
   }
 
 disconnect() {
-   console.log("Disconnect....")  ;
+   console.log("Disconnect....")  ;   
+   window.dispatchEvent( new CustomEvent ( 'onDisconnect' , 
+                                         {  bubbles: true    , 
+                                              composed: true   ,
+                                              detail: {
+                                                message: 'onDisconnect'
+                                              } 
+                                         } 
+                        ) ) ;
+
    document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[1].getElementsByTagName("th")[0].innerHTML  =  "Connected as [ ] "  ;
    document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[0].style.display = "block" ;
    document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("connected-bar").style.display = "none" ;
-   
-     window.dispatchEvent( new CustomEvent ( 'onDisconnect' , 
-                                            {  bubbles: true    , 
-                                                composed: true   ,
-                                                detail: {
-                                                message: 'onDisconnect'
-                                                } 
-                                            } 
-                        ) ) ;
-    
+  
+     
   }
 
   

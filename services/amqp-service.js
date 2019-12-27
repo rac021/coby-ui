@@ -4,12 +4,17 @@
      static instance ;
  
      constructor() {  
-         
-         if ( this.instance) {
+         // DON'T USE THIS.INSTANCE ( USE INSTANCE => STATIC )
+         if ( this.instance) {           
             return this.instance;
          }
          
+        // window.addEventListener( "onDisconnect" , event => this.on_disconnect(event) );    
+         alert("another instance..");
+         window.addEventListener( "clear-logs-permanently" , event => this.on_clear_logs_permanently(event) ); 
+         
          this.instance = this ;
+       //  return this.instance ;
      
    }
 
@@ -60,7 +65,7 @@
     
         this.ws = new WebSocket( this.url);
     
-        this.client = Stomp.over(this.ws);
+        this.client = Stomp.over(this.ws);       
         
         this.client.debug = ( str) => { 
           // console.log( str );
@@ -70,12 +75,7 @@
         // this.connectedCallback() ; 
         
         this.tryConnect() ;
-     
-        //alert("Attach Event to disconnect" );
-       window.addEventListener( "onDisconnect" , event => this.on_disconnect(event) );    
-       
-       window.addEventListener( "clear-logs-permanently" , event => this.on_clear_logs_permanently(event) ); 
-       
+      
        
        
    }
@@ -112,43 +112,69 @@
     
    async on_clear_logs_permanently() {
      
-        if( this.CONNECTION_STATE === "" || this.CONNECTION_STATE  === "KO" ) {
-        
-            alert( " Not ALready Connected ! ");
+        if( this.CONNECTION_STATE === "" || this.CONNECTION_STATE  === "KO" ) {        
+            alert( " Not Already Connected ! ");
             return ;
         }
         
         else if( this.username != "admin" ) {
-            alert( " Can't do this ! ");
+            alert( " Sory, the User " + this.username + " In not Authorized !! ");
             return ;
         }
         else {
-            
-        alert("OK CLEAR LOGS " ) ;
-           
+              
         // curl -XDELETE -u admin http://admin:admin@localhost:8181/api/queues/%2f/test/contents
 
         var headers = new Headers();
-        headers.append('Authorization', 'Basic ' + btoa("admin" + ':' + "admin"));
-        headers.append('Access-Control-Allow-Origin', '*');
-      //  headers.append('Access-Control-Allow-Credentials', 'true');
-        headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        headers.append("Authorization", "Basic " + btoa("admin" + ':' + "admin"));
+        headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1');
+       // headers.append("Origin", "http://127.0.0.1");
+       // headers.append("Access-Control-Allow-Credentials", "true");
+       // headers.append("Access-Control-Request-Method", "DELETE");
+       // headers.append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");        
+       // headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+       // headers.append("Access-Control-Request-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
         
-
-         const rawResponse = await fetch('http://127.0.0.1:8181/api/queues/%2f/coby-log-root-queue/contents', {
-           method: 'DELETE' ,
-           mode: "cors",
-           headers: headers,
-        }).then(res=>res.json())
-         .then(res => alert(res));;
+        
+        Swal.fire({
+        title: 'Are you sure ?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor:'#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Purge Queue !'
+        }).then((result) => {
+        if (result.value) {
             
-
+           this.on_disconnect() ;
+            
+           const rawResponse = fetch("http://127.0.0.1:8181/api/queues/%2f/coby-log-root-queue/contents", {
+             method: "DELETE" ,
+             mode: "cors",
+             headers: headers,
+           }).then(res =>   
+                           Swal.fire (
+                               res.ok.toString() ,
+                               res.statusText + " ( Status : " + res.status  + " ) ",                             
+                               'success'
+            ) ) ;
+            
+            this.connect(  this.url, this.virtualHost, this.queue, this.username, this.password ) ;            
+        }
+        }) ;
+                    
+        
+        
+         
+         
         }
         
-        
+       
     }
+    
+    
     on_disconnect() {
-        
+       // alert("Disconnect");
         if( this.CONNECTION_STATE === "OK") {
         
             this.subscription.unsubscribe();
@@ -163,8 +189,8 @@
                                               {  bubbles: true , 
                                                  composed: true } ) ) ;
                                                      
-            this.CONNECTION_STATE = "KO" ;
-                                                       
+            this.CONNECTION_STATE = "" ;
+            
         }
        
     }
@@ -176,14 +202,14 @@
                                                 composed: true   ,
                                                 detail: {
                                                 message: 'Connection failed!' + er
-                                                } 
+                                                }
                                             } 
                                 ) ) ;
       
     }
     
     // This will be called upon arrival of a message
-   on_message(message) {
+    on_message(message) {
         // console.log(message) ;
         // console.log('message received'); 
         const log = JSON.parse(message.body);
@@ -201,26 +227,6 @@
         // message.ack();
     }
   
-
-  
-   // This will be called upon arrival of a message
-   on_message_with_remove_perm(message) {
-        // console.log(message) ;
-        // console.log('message received'); 
-        const log = JSON.parse(message.body);
-
-        /* Send data to textarea componenent wich is listening on the event $onRecievedDataLogsEvent */
-        window.dispatchEvent( new CustomEvent ( onRecievedDataLogsEvent , 
-                                            {  bubbles: true    , 
-                                                composed: true   ,
-                                                detail: {
-                                                message: log.message
-                                                } 
-                                            } 
-                                ) ) ;
-                                
-        // message.ack();
-    }
   
   
  }

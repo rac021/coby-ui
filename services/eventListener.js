@@ -1,32 +1,33 @@
  
   class EventListenerService {
-
-      
-      constructor() {
-          this.connectedCallback()   ;
-
+ 
+      constructor() {        
+        //  this.amqp = new AmqpService() ;
+          this.connectedCallback( new AmqpService() )  ;
       }
 
-      connectedCallback() {
-
+      connectedCallback( amqp ) {    
+          
         window.addEventListener( "authentication", function(event) {
-        
-          this.console.log ( " Authentication : " + event.detail.login  + " -- " +  event.detail.password ) ; 
+            
+         //  alert("Reconnect");
+          
+          this.login    = event.detail.login     ;
+          this.password =  event.detail.password ;
+          
+          this.console.log ( " Authentication : " + this.login  + " -- " +  this.password ) ; 
 
           var vHost = "/" ;
           var queue = "/exchange/coby-log-user-exchange" ;
           var socket = "ws://127.0.0.1:15674/ws"         ;
           
-          if( event.detail.login == 'admin' ) {
+          if(  this.login == 'admin' ) {
               queue = "/queue/coby-log-root-queue"
           }
-          
-          this.login = event.detail.login ;
-          this.password =  event.detail.password ;
-          
-          this.amqp = new AmqpService()  ;
-          
-          this.amqp.connect( socket, vHost, queue, login , password ) ;
+            
+          if( amqp == null ) amqp =  new AmqpService() ;
+                                
+          amqp.connect( socket, vHost, queue, login , password ) ;
           
           var connexion = "" ;
           
@@ -36,14 +37,14 @@
 
                     const intervalId = setInterval(() =>  {
 
-                     if( this.amqp.getConnectionState() === "OK" ) {
+                     if( amqp.getConnectionState() === "OK" ) {
                          clearInterval(intervalId) ;
-                          resolve("OK");
+                         resolve("OK");
                      }
                      
                      else {
                         clearInterval(intervalId) ;
-                          resolve("KO");
+                        resolve("KO");
                     }
                     }, 50 )
                 })
@@ -65,25 +66,30 @@
                             document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[1].getElementsByTagName("th")[0].innerHTML  =  "Connected as [ " + event.detail.login  + " ]"  ;
                             document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[0].style.display = "none" ;
                             document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("connected-bar").style.display = "block" ;
-                                                        
+                           
+                            
+                             // alert("event disconnect only once" );
+                              // window.removeEventListener( "onDisconnect", disco , true) ;
+                              // window.addEventListener( "onDisconnect" , disco  );
                             // Because Connected 
-                            window.addEventListener( "onDisconnect" , event =>  {
+                            
+                            
+                      //    
+                            
+                           // if( !  attachedDisconnectEvent )  {
+                     //           window.addEventListener( "onDisconnect" , disco, false);
                                 
-                                this.amqp = null ;
-                                   
-                                Swal.fire ( {
-                                    position: 'center',
-                                    type: 'info',
-                                    title: 'Signed out Successfully',
-                                    showConfirmButton: false,
-                                    timer: 2500
-                                }) ;                            
-                                
-                            });
-                    }                    
+                             //   attachedDisconnectEvent = true ; 
+                         //  }
+                           
+                    } else {
+                       amqp = null ;   
+                    }
               
               } ) ;
-          
+              
+              
+             
           /*
 
           var tryConn = setInterval( () => {
@@ -208,11 +214,27 @@
                    document.querySelector('article').style.gridTemplateRows = ".2fr auto";    
                    
                    document.getElementById("coby-mode").innerHTML = " Pipeline Mode";
-                }
+                }  window.removeEventListener( "onDisconnect", disco ) ;
 
   	   })  ;   
              
 
+       
+       
+          window.addEventListener( "onDisconnect" ,function(event) {
+                                   amqp.on_disconnect();
+                                    amqp = null         ;                                    
+                                    Swal.fire ( {
+                                        position: 'center',
+                                        type: 'info',
+                                        title: 'Signed out Successfully',
+                                        showConfirmButton: false,
+                                        timer: 2500
+                                    }) ; 
+         }) ;
+         
+        
+        
       }
       
       

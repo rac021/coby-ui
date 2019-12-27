@@ -29,11 +29,11 @@
 						 
 							 <div id="fade-box">
 							 
-								 <input type="text" id="login-page"    name="login-page"     placeholder="Login" required autofocus  >
+								 <input type="text" id="login-page"    name="login-page"     placeholder="Login" required autofocus  value="admin">
 								 <input type="text" id="rest-endpoint-page" name="password-page" placeholder="REST EndPoint" required style="display:none; border: 2px solid #fff94b;" value="http://localhost:8080/start" >
 								 
 								
-								 <input type="password" id="password-page" name="password-page"  placeholder="Password" required >
+								 <input type="password" id="password-page" name="password-page"  placeholder="Password" required value="admin">
 								 <input type="text"     id="websocket-endpoint-page"  name="password-page"     placeholder="Login"  required  style="display:none ; border: 2px solid #fff94b;" value="ws://127.0.0.1:15674/ws" >
 
                                   <table>
