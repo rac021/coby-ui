@@ -10,7 +10,7 @@
          }
          
         // window.addEventListener( "onDisconnect" , event => this.on_disconnect(event) );    
-
+ // alert("AmqpService instance ") ;
          window.addEventListener( "clear-logs-permanently" , event => this.on_clear_logs_permanently(event) ); 
          
          AmqpService.instance = this ;
@@ -23,7 +23,9 @@
   // }
    
     tryConnect() {
+  
      this.client.connect( this.username , this.password ,  () => this.on_connect(), err => this.on_connect_error(err), this.virtualHost ) ;
+        
    }
    
    getConnectionState() {
@@ -33,12 +35,13 @@
    
    connect( url, virtualHost, queue, username, password  ) {
    
+        this.CONNECTION_STATE = "" ; // OK - KO
+       
         // alert("AMQP_SERVICE_CONSTRUCTOR");
         this.url = url ; // "https://sse.now.sh" ;
         this.username = username ;
         this.password = password ;
-
-        this.CONNECTION_STATE = "" ; // OK - KO  
+  
                 
     //  attachScript("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js") ;
     //  attachScript("https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js") ; 
@@ -86,9 +89,9 @@
     
    on_connect() {
 
+     
      this.subscription = this.client.subscribe( this.queue, this.on_message,  {'ack': 'client'} );
      
-     this.CONNECTION_STATE = "OK" ;   
        /* Send data to textarea componenent wich is listening on the event $onRecievedDataLogsEvent */
        
         window.dispatchEvent( new Event( "clear-logs" , 
@@ -104,7 +107,10 @@
                                             } 
                                          } 
                                ) ) ;
-    
+                               
+     
+     this.CONNECTION_STATE = "OK" ;   
+    // alert("OK ON CONNECT IN ON CONNECT ");
  
    //  alert(" this connected => " + this.CONNECTION_STATE );
                                
@@ -128,7 +134,7 @@
         var headers = new Headers();
         headers.append("Authorization", "Basic " + btoa("admin" + ':' + "admin"));
         headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1');
-       // headers.append("Origin", "http://127.0.0.1");
+        headers.append("Origin", "http://127.0.0.1");
        // headers.append("Access-Control-Allow-Credentials", "true");
        // headers.append("Access-Control-Request-Method", "DELETE");
        // headers.append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");        
@@ -190,6 +196,7 @@
                                                  composed: true } ) ) ;
                                                      
             this.CONNECTION_STATE = "" ;
+            // alert("DISSCONNECTED FROM ON_DOSCONNECT");
             
         }
        
@@ -205,6 +212,8 @@
                                                 }
                                             } 
                                 ) ) ;
+                                
+                                //alert(" KO FROM ERROR");
       
     }
     

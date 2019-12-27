@@ -40,12 +40,14 @@
                     const intervalId = setInterval(() =>  {
 
                      if( EventListenerService.amqp.getConnectionState() === "OK" ) {
+                         //alert("in promise OKKKKKKK" );
                          clearInterval(intervalId) ;
                          resolve("OK");
                      }
                      
-                     else {
+                     else if( EventListenerService.amqp.getConnectionState() === "KO" ) {
                         clearInterval(intervalId) ;
+                        //alert("in promise KKKKKKOOOOOO" );
                         resolve("KO");
                     }
                     }, 50 )
@@ -54,21 +56,22 @@
           
           
           tryConn().then( connState =>      {
-             
+             //alert(" STATE CONN => " +connState );
                     if( connState == "OK" ) {                       
-                                     
-                            Swal.fire ( {
+                                 //  alert("Yeaaaaah connexion" );  
+                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[1].getElementsByTagName("th")[0].innerHTML  =  "Connected as [ " + event.detail.login  + " ]"  ;
+                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[0].style.display = "none" ;
+                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("connected-bar").style.display = "block" ;
+                           
+                             Swal.fire ( {
                             position: 'center',
                             type: 'success',
                             title: 'Signed in Successfully',
                             showConfirmButton: false,
                             timer: 2500
                             }) ;
-                                                     
-                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[1].getElementsByTagName("th")[0].innerHTML  =  "Connected as [ " + event.detail.login  + " ]"  ;
-                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("authentication-bar").getElementsByTagName("tr")[0].style.display = "none" ;
-                            document.getElementsByTagName("coby-auth")[0].shadowRoot.getElementById("connected-bar").style.display = "block" ;
-                           
+                                
+                            
                             
                              // alert("event disconnect only once" );
                               // window.removeEventListener( "onDisconnect", disco , true) ;
@@ -85,6 +88,7 @@
                          //  }
                            
                     } else {
+                       // alert("Oups ! "  +connState );
                        EventListenerService.amqp = null ;   
                     }
               
