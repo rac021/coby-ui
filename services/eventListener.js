@@ -1,12 +1,14 @@
  
   class EventListenerService {
  
+      static amqp  ;
+      
       constructor() {        
         //  this.amqp = new AmqpService() ;
           this.connectedCallback( new AmqpService() )  ;
       }
 
-      connectedCallback( amqp ) {    
+      connectedCallback() {    
           
         window.addEventListener( "authentication", function(event) {
             
@@ -24,10 +26,10 @@
           if(  this.login == 'admin' ) {
               queue = "/queue/coby-log-root-queue"
           }
-            
-          if( amqp == null ) amqp =  new AmqpService() ;
                                 
-          amqp.connect( socket, vHost, queue, login , password ) ;
+          if ( EventListenerService.amqp == null ) EventListenerService.amqp = new AmqpService() ;
+                                
+          EventListenerService.amqp.connect( socket, vHost, queue, login , password ) ;
           
           var connexion = "" ;
           
@@ -37,7 +39,7 @@
 
                     const intervalId = setInterval(() =>  {
 
-                     if( amqp.getConnectionState() === "OK" ) {
+                     if( EventListenerService.amqp.getConnectionState() === "OK" ) {
                          clearInterval(intervalId) ;
                          resolve("OK");
                      }
@@ -83,7 +85,7 @@
                          //  }
                            
                     } else {
-                       amqp = null ;   
+                       EventListenerService.amqp = null ;   
                     }
               
               } ) ;
@@ -222,9 +224,9 @@
        
        
           window.addEventListener( "onDisconnect" ,function(event) {
-                                   amqp.on_disconnect();
-                                    amqp = null         ;                                    
-                                    Swal.fire ( {
+                                   EventListenerService.amqp.on_disconnect();
+                                   EventListenerService.amqp == null ;                                  
+                                   Swal.fire ( {
                                         position: 'center',
                                         type: 'info',
                                         title: 'Signed out Successfully',

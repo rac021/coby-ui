@@ -5,15 +5,15 @@
  
      constructor() {  
          // DON'T USE THIS.INSTANCE ( USE INSTANCE => STATIC )
-         if ( this.instance) {           
-            return this.instance;
+         if ( AmqpService.instance) {           
+            return AmqpService.instance;
          }
          
         // window.addEventListener( "onDisconnect" , event => this.on_disconnect(event) );    
-         alert("another instance..");
+
          window.addEventListener( "clear-logs-permanently" , event => this.on_clear_logs_permanently(event) ); 
          
-         this.instance = this ;
+         AmqpService.instance = this ;
        //  return this.instance ;
      
    }
