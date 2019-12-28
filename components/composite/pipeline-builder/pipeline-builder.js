@@ -156,10 +156,21 @@
 
      ` ;
 
-      _attachScript('components/composite/pipeline-builder/redips/redips-drag-min.js') ;  
-      _attachScript('components/base/button/coby-button.js') ;
+
+     
+     Promise.resolve()
+            .then( () => _attachScript('components/composite/pipeline-builder/redips/redips-drag-min.js'))
+            .then(timeout(1))
+            .then(() => _attachScript('components/base/button/coby-button.js'))
+            .then(timeout(5))
+            .then(() => _attachScript('components/composite/pipeline-builder/redips-script.js')) ;
+            
+          
+     
+     // _attachScript('components/composite/pipeline-builder/redips/redips-drag-min.js') ;  
+     // _attachScript('components/base/button/coby-button.js') ;
     
-      setTimeout(function() { _attachScript('components/composite/pipeline-builder/redips-script.js') ; }, 5 ) ; 
+     // setTimeout(function() { _attachScript('components/composite/pipeline-builder/redips-script.js') ; }, 5 ) ; 
       
      
 
@@ -182,6 +193,9 @@
  }
 
 
+ function timeout(ms) {
+  return () => new Promise(resolve => setTimeout(resolve, ms));
+ }
 
  function _attachScript(url) {
  

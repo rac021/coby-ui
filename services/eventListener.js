@@ -220,7 +220,7 @@
                    document.querySelector('article').style.gridTemplateRows = ".2fr auto";    
                    
                    document.getElementById("coby-mode").innerHTML = " Pipeline Mode";
-                }  window.removeEventListener( "onDisconnect", disco ) ;
+                }
 
   	   })  ;   
              
