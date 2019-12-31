@@ -163,21 +163,24 @@
                                res.ok.toString() ,
                                res.statusText + " ( Status : " + res.status  + " ) ",                             
                                'success'
-            ) ) ;
+            ) ).catch(function(error) {
+                
+                   Swal.fire({
+                        type: 'error',
+                        title: 'Oops',
+                        text: error,
+                        footer: 'Enable cross-origin resource sharing on your browser'
+                  }) ;
+                   
+           });
             
             this.connect(  this.url, this.virtualHost, this.queue, this.username, this.password ) ;            
         }
         }) ;
-                    
-        
-        
-         
          
         }
-        
        
     }
-    
     
     on_disconnect() {
        // alert("Disconnect");
